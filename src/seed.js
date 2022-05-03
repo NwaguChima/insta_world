@@ -1,4 +1,6 @@
-export function seedDatabase(firebase) {
+import { doc, setDoc } from "firebase/firestore";
+
+export async function seedDatabase(dataBase) {
   const users = [
     {
       userId: "MLDqCdrxO0aHOKVqSvgWBW8qc5y2",
@@ -40,33 +42,30 @@ export function seedDatabase(firebase) {
 
   // eslint-disable-next-line prefer-const
   for (let k = 0; k < users.length; k++) {
-    firebase.firestore().collection("users").add(users[k]);
+    await setDoc(doc(dataBase, "users/" + users[k].userId), users[k]);
   }
 
   // eslint-disable-next-line prefer-const
   for (let i = 1; i <= 5; ++i) {
-    firebase
-      .firestore()
-      .collection("photos")
-      .add({
-        photoId: i,
-        userId: "2",
-        imageSrc: `/images/users/raphael/${i}.jpg`,
-        caption: "Saint George and the Dragon",
-        likes: [],
-        comments: [
-          {
-            displayName: "dali",
-            comment: "Love this place, looks like my animal farm!",
-          },
-          {
-            displayName: "orwell",
-            comment: "Would you mind if I used this picture?",
-          },
-        ],
-        userLatitude: "40.7128°",
-        userLongitude: "74.0060°",
-        dateCreated: Date.now(),
-      });
+    await setDoc(doc(dataBase, "photos/" + i), {
+      photoId: i,
+      userId: "2",
+      imageSrc: `/images/users/raphael/${i}.jpg`,
+      caption: "Saint George and the Dragon",
+      likes: [],
+      comments: [
+        {
+          displayName: "dali",
+          comment: "Love this place, looks like my animal farm!",
+        },
+        {
+          displayName: "orwell",
+          comment: "Would you mind if I used this picture?",
+        },
+      ],
+      userLatitude: "40.7128°",
+      userLongitude: "74.0060°",
+      dateCreated: Date.now(),
+    });
   }
 }
