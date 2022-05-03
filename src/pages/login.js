@@ -18,7 +18,11 @@ const Login = () => {
     document.title = "Login - Insta_world";
   }, []);
 
-  return <div>I am the Login Page</div>;
+  return (
+    <div className="container flex mx-auto max-w-screen-md items-center">
+      I am the Login Page
+    </div>
+  );
 };
 
 export default Login;
