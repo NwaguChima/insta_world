@@ -1,4 +1,4 @@
-import { doc, setDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 
 export async function seedDatabase(dataBase) {
   const users = [
@@ -42,12 +42,12 @@ export async function seedDatabase(dataBase) {
 
   // eslint-disable-next-line prefer-const
   for (let k = 0; k < users.length; k++) {
-    await setDoc(doc(dataBase, "users/" + users[k].userId), users[k]);
+    await addDoc(collection(dataBase, "users"), users[k]);
   }
 
   // eslint-disable-next-line prefer-const
   for (let i = 1; i <= 5; ++i) {
-    await setDoc(doc(dataBase, "photos/" + i), {
+    await addDoc(collection(dataBase, "photos"), {
       photoId: i,
       userId: "2",
       imageSrc: `/images/users/raphael/${i}.jpg`,
