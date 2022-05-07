@@ -18,4 +18,7 @@ const dataBase = getFirestore(app);
 const auth = getAuth(app);
 // seedDatabase(dataBase);
 
-export { app, dataBase, auth };
+// console.log("zzzzz", auth);
+
+export { auth };
+export default dataBase;

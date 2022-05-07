@@ -1,12 +1,15 @@
+/* eslint-disable quotes */
 import { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
-import FirebaseContext from "../context/firbase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
+import { Link, useNavigate } from "react-router-dom";
+import * as ROUTES from "../constants/routes";
+import FirebaseContext from "../context/firbaseContext";
 import iphoneImg from "../images/iphone-with-profile.jpg";
 import logoImg from "../images/logo.png";
 
-const Login = () => {
-  const history = useHistory;
+function Login() {
+  const navigate = useNavigate();
   const { auth } = useContext(FirebaseContext);
 
   const [emailAddress, setEmailAddress] = useState("");
@@ -15,7 +18,19 @@ const Login = () => {
   const [error, setError] = useState("");
   const isInvalid = password === "" || emailAddress === "";
 
-  const handleLogin = () => {};
+  const handleLogin = async (event) => {
+    event.preventDefault();
+
+    try {
+      await signInWithEmailAndPassword(auth, emailAddress, password);
+      navigate(ROUTES.DASHBOARD);
+    } catch (error) {
+      setEmailAddress("");
+      setPassword("");
+      setError(error.message);
+      console.log(error, "as eerorrr");
+    }
+  };
 
   useEffect(() => {
     document.title = "Login - Insta_world";
@@ -70,6 +85,6 @@ const Login = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Login;
