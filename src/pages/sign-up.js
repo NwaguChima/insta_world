@@ -1,8 +1,7 @@
 /* eslint-disable quotes */
 import { useState, useContext, useEffect } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-
 import { Link, useNavigate } from "react-router-dom";
+import doesUsernameExist from "../services/firebase";
 import * as ROUTES from "../constants/routes";
 import FirebaseContext from "../context/firbaseContext";
 import iphoneImg from "../images/iphone-with-profile.jpg";
@@ -10,7 +9,7 @@ import logoImg from "../images/logo.png";
 
 function SignUp() {
   const navigate = useNavigate();
-  const { auth } = useContext(FirebaseContext);
+  const { firebase } = useContext(FirebaseContext);
 
   const [username, setUsername] = useState("");
   const [fullName, setFullName] = useState("");
@@ -23,8 +22,37 @@ function SignUp() {
   const handleSignup = async (event) => {
     event.preventDefault();
 
-    // try {
-    // } catch (error) {}
+    const usernameExists = await doesUsernameExist(username);
+    if (!usernameExists.length) {
+      try {
+        // eslint-disable-next-line prettier/prettier
+        const createdUserResult = await firebase
+          .auth()
+          .createUserWithEmailAndPassword(emailAddress, password);
+
+        // authentication == email, password, & username(displayname)
+        await createdUserResult.user.updateProfile({ displayName: username });
+
+        // firebase user collection (create a document)
+        await firebase.firestore().collection("users").add({
+          userId: createdUserResult.user.uid,
+          username: username.toLowerCase(),
+          fullName,
+          emailAddress: emailAddress.toLowerCase(),
+          following: [],
+          dateCreated: Date.now(),
+        });
+
+        navigate(ROUTES.DASHBOARD);
+      } catch (error) {
+        setFullName("");
+        setEmailAddress("");
+        setPassword("");
+        setError(error.message);
+      }
+    } else {
+      setError("That username is already taken, please try another");
+    }
   };
 
   useEffect(() => {

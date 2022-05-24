@@ -1,6 +1,6 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import Firebase from "firebase/app";
+import "firebase/firestore";
+import "firebase/auth";
 
 // import { seedDatabase } from "../seed";
 
@@ -12,13 +12,9 @@ const config = {
   messagingSenderId: "1006355019116",
   appId: "1:1006355019116:web:5fc5f7608b823f0a40af49",
 };
-
-const app = initializeApp(config);
-const dataBase = getFirestore(app);
-const auth = getAuth(app);
 // seedDatabase(dataBase);
 
-// console.log("zzzzz", auth);
+const firebase = Firebase.initializeApp(config);
+const { FieldValue } = Firebase.firestore;
 
-export { auth };
-export default dataBase;
+export { firebase, FieldValue };

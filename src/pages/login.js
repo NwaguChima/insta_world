@@ -1,7 +1,6 @@
 /* eslint-disable quotes */
 import { useState, useContext, useEffect } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-
+// import { signInWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import * as ROUTES from "../constants/routes";
 import FirebaseContext from "../context/firbaseContext";
@@ -10,7 +9,7 @@ import logoImg from "../images/logo.png";
 
 function Login() {
   const navigate = useNavigate();
-  const { auth } = useContext(FirebaseContext);
+  const { firebase } = useContext(FirebaseContext);
 
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
@@ -22,7 +21,7 @@ function Login() {
     event.preventDefault();
 
     try {
-      await signInWithEmailAndPassword(auth, emailAddress, password);
+      await firebase.auth().signInWithEmailAndPassword(emailAddress, password);
       navigate(ROUTES.DASHBOARD);
     } catch (error) {
       setEmailAddress("");
