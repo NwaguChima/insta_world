@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable  */
 /* eslint-disable quotes */
+import "./wdyr";
 import React, { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
