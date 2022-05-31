@@ -7,6 +7,7 @@ import {
   getUserByUsername,
   getUserPhotosByUsername,
 } from "../../services/firebase";
+import Photos from "./photos";
 
 export default function Profile({ user }) {
   const reducer = (state, newState) => ({ ...state, ...newState });
@@ -40,7 +41,13 @@ export default function Profile({ user }) {
 
   return (
     <>
-      <Header />
+      <Header
+        photosCount={photosCollection ? photosCollection.length : 0}
+        profile={profile}
+        followerCount={followerCount}
+        setFollerCount={dispatch}
+      />
+      <Photos photos={photosCollection} />
       <p>Hello {user.username}</p>
     </>
   );
