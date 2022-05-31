@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
 import { firebase, FieldValue } from "../lib/firebase";
 
-async function doesUsernameExist(username) {
+export default async function doesUsernameExist(username) {
   const result = await firebase
     .firestore()
     .collection("users")
@@ -11,7 +11,20 @@ async function doesUsernameExist(username) {
   return result.docs.map((user) => user.data().length > 0);
 }
 
-export default doesUsernameExist;
+export async function getUserByUsername(username) {
+  const result = await firebase
+    .firestore()
+    .collection("users")
+    .where("username", "==", username)
+    .get();
+
+  const user = result.docs.map((item) => ({
+    ...item.data(),
+    docId: item.id,
+  }));
+
+  return user;
+}
 
 export async function getUserByUserId(userId) {
   // eslint-disable-next-line prettier/prettier
