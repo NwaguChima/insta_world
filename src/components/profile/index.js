@@ -10,6 +10,8 @@ import {
 import Photos from "./photos";
 
 export default function Profile({ user }) {
+  console.log("----------------------------");
+
   const reducer = (state, newState) => ({ ...state, ...newState });
   const initialState = {
     profile: {},
