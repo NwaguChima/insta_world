@@ -1,17 +1,15 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable prettier/prettier */
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer } from "react";
 import PropTypes from "prop-types";
 import Header from "./header";
 import {
-  getUserByUsername,
+  //   getUserByUsername,
   getUserPhotosByUsername,
 } from "../../services/firebase";
 import Photos from "./photos";
 
 export default function Profile({ user }) {
-  console.log("----------------------------");
-
   const reducer = (state, newState) => ({ ...state, ...newState });
   const initialState = {
     profile: {},
@@ -27,7 +25,6 @@ export default function Profile({ user }) {
   useEffect(() => {
     async function getProfileInfoAndPhoto() {
       const photos = await getUserPhotosByUsername(user.username);
-      console.log("photos", photos);
 
       dispatch({
         profile: user,
@@ -39,6 +36,7 @@ export default function Profile({ user }) {
     if (user.username) {
       getProfileInfoAndPhoto();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.username]);
 
   return (

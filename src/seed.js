@@ -1,3 +1,4 @@
+/*
 import { addDoc, collection } from "firebase/firestore";
 
 export async function seedDatabase(dataBase) {
@@ -72,3 +73,5 @@ export async function seedDatabase(dataBase) {
       });
   }
 }
+
+*/
