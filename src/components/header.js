@@ -1,9 +1,10 @@
+/* eslint-disable prettier/prettier */
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import FirebaseContext from "../context/firbaseContext";
 import UserContext from "../context/userContext";
 import * as ROUTES from "../constants/routes";
-import logoImg from "../images/logo.png";
+import logoImg from "../images/insta_worldL.svg";
 
 function Header() {
   const { firebase } = useContext(FirebaseContext);
@@ -16,7 +17,10 @@ function Header() {
           <div className="text-gray-700 text-center flex items-center align-items cursor-pointer">
             <h1 className="flex justify-center w-full">
               <Link to={ROUTES.DASHBOARD} aria-label="insta world logo">
-                <img src={logoImg} alt="insta_world" className="mt-2 w-6/12" />
+                <div className="flex justify-center items-center gap-4">
+                  <span className="text-xl mt-2">Insta_world</span>
+                  <img src={logoImg} alt="insta_world" className="mt-2 w-20" />
+                </div>
               </Link>
             </h1>
           </div>
