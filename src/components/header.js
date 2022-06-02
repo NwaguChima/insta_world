@@ -5,10 +5,12 @@ import FirebaseContext from "../context/firbaseContext";
 import UserContext from "../context/userContext";
 import * as ROUTES from "../constants/routes";
 import logoImg from "../images/insta_worldL.svg";
+import useUser from "../hooks/use-user";
 
 function Header() {
+  const { user: loggedInUser } = useContext(UserContext);
+  const { user } = useUser(loggedInUser?.uid);
   const { firebase } = useContext(FirebaseContext);
-  const { user } = useContext(UserContext);
 
   return (
     <header className="h-16 bg-white border-b border-gray-primary mb-8">
@@ -25,7 +27,7 @@ function Header() {
             </h1>
           </div>
           <div className="text-gray-700 text-center flex items-center align-items">
-            {user ? (
+            {user.username ? (
               <>
                 <Link to={ROUTES.DASHBOARD} aria-label="Dashboard">
                   <svg
@@ -69,11 +71,11 @@ function Header() {
                   </svg>
                 </button>
                 <div className="flex items-center cursor-pointer">
-                  <Link to={`/p/${user.displayName}`}>
+                  <Link to={`/p/${user?.username}`}>
                     <img
                       className="rounded-full h-8 w-8 flex"
                       src="https://upload.wikimedia.org/wikipedia/commons/f/f4/User_Avatar_2.png?20170128014309"
-                      alt={`${user.displayName} profile`}
+                      alt={`${user?.username} profile`}
                     />
                   </Link>
                 </div>

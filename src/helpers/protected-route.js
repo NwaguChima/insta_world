@@ -2,6 +2,7 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
 import PropTypes from "prop-types";
+import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import * as ROUTES from "../constants/routes";
 
@@ -17,7 +18,7 @@ export default function ProtectedRoute({ user, children }) {
     );
   }
 
-  return children;
+  return React.cloneElement(children, {user});
 }
 
 ProtectedRoute.propTypes = {

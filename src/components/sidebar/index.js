@@ -1,13 +1,13 @@
 /* eslint-disable prettier/prettier */
-import React from "react";
-import useUser from "../../hooks/use-user";
+import React, { useContext } from "react";
 import User from "./user";
 import Suggestions from "./suggestions";
+import LoggedInUserContext from "../../context/logged-in-user";
 
 function Sidebar() {
   const {
-    user: { fullName, username, userId, following, docId },
-  } = useUser();
+    user: { docId = "", fullName, username = "", userId, following } = {},
+  } = useContext(LoggedInUserContext);
 
   return (
     <div className="p-4">

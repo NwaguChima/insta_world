@@ -1,12 +1,14 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/forbid-prop-types */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import Skeleton from "react-loading-skeleton";
 import useUser from "../../hooks/use-user";
 import { isUserFollowingProfile, toggleFollow } from "../../services/firebase";
+import UserContext from "../../context/userContext";
 
+const defaultImg = ["dali", "karl", "orwell", "raphael", "steve"];
 const images = require.context("../../images/avatars", true);
 
 export default function Header({
@@ -17,14 +19,16 @@ export default function Header({
     docId: profileDocId,
     userId: profileUserId,
     fullName,
-    followers = [],
-    following = [],
+    followers,
+    following,
     username: profileUsername,
   },
 }) {
-  const { user } = useUser();
+  const { user: loggedInUser } = useContext(UserContext);
+  const { user } = useUser(loggedInUser?.uid);
   const [isFollowingProfile, setIsFollowingProfile] = useState(false);
-  const activeButtonFollow = user.username && user.username !== profileUsername;
+  const activeButtonFollow =
+    user?.username && user?.username !== profileUsername;
 
   const handleToggleFollow = async () => {
     setIsFollowingProfile((isFollowingProfile) => !isFollowingProfile);
@@ -50,19 +54,31 @@ export default function Header({
       setIsFollowingProfile(!!isFollowing);
     };
 
-    if (user.username && profileUserId) {
+    if (user?.username && profileUserId) {
       isLoggedInUserFollowingProfile();
     }
-  }, [user.username, profileUserId]);
+  }, [user?.username, profileUserId]);
 
   return (
     <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
-      <div className="container flex justify-center">
-        {user.username && (
+      <div className="container flex justify-center items-center">
+        {profileUsername ? (
           <img
             className="rounded-full h-40 w-40 flex"
             alt={`${user.username} profile picture`}
-            src={images(`./${!profileUsername ? "karl" : profileUsername}.jpg`)}
+            src={images(
+              `./${
+                !defaultImg.includes(profileUsername)
+                  ? "default"
+                  : profileUsername
+              }.jpg`
+            )}
+          />
+        ) : (
+          <img
+            className="rounded-full h-40 w-40 flex"
+            alt="Default profile picture"
+            src={images(`./${"karl"}.jpg`)}
           />
         )}
       </div>

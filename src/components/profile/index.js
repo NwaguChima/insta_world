@@ -3,10 +3,7 @@
 import { useEffect, useReducer } from "react";
 import PropTypes from "prop-types";
 import Header from "./header";
-import {
-  //   getUserByUsername,
-  getUserPhotosByUsername,
-} from "../../services/firebase";
+import { getUserPhotosByUsername } from "../../services/firebase";
 import Photos from "./photos";
 
 export default function Profile({ user }) {

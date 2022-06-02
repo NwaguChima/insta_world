@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
+const defaultImg = ["dali", "karl", "orwell", "raphael", "steve"];
 const images = require.context("../../images/avatars", true);
 
 function User({ username, fullName }) {
@@ -17,7 +18,9 @@ function User({ username, fullName }) {
       <div className="flex items-center justify-between col-span-1">
         <img
           className="rounded-full w-16 flex mr-3"
-          src={images(`./${username}.jpg`)}
+          src={images(
+            `./${!defaultImg.includes(username) ? "default" : username}.jpg`
+          )}
           alt="profile badge"
         />
       </div>

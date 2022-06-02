@@ -34,14 +34,18 @@ function SignUp() {
         await createdUserResult.user.updateProfile({ displayName: username });
 
         // firebase user collection (create a document)
-        await firebase.firestore().collection("users").add({
-          userId: createdUserResult.user.uid,
-          username: username.toLowerCase(),
-          fullName,
-          emailAddress: emailAddress.toLowerCase(),
-          following: [],
-          dateCreated: Date.now(),
-        });
+        await firebase
+          .firestore()
+          .collection("users")
+          .add({
+            userId: createdUserResult.user.uid,
+            username: username.toLowerCase(),
+            fullName,
+            emailAddress: emailAddress.toLowerCase(),
+            following: ["2"],
+            followers: [],
+            dateCreated: Date.now(),
+          });
 
         navigate(ROUTES.DASHBOARD);
       } catch (error) {
@@ -51,6 +55,7 @@ function SignUp() {
         setError(error.message);
       }
     } else {
+      setUsername("");
       setError("That username is already taken, please try another");
     }
   };
@@ -91,7 +96,7 @@ function SignUp() {
             <input
               aria-label="Enter your email address"
               type="text"
-              placeholder="Email Address"
+              placeholder="Email address"
               className="text-sm text-grey-base w-full mr-3 py-5 px-4 h-2 border border-gray-primary rounded mb-2"
               onChange={({ target }) => setEmailAddress(target.value)}
               value={emailAddress}

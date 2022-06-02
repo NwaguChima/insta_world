@@ -7,6 +7,7 @@ import {
   updateFollowedUserFollowers,
 } from "../../services/firebase";
 
+const defaultImg = ["dali", "karl", "orwell", "raphael", "steve"];
 const images = require.context("../../images/avatars", true);
 
 export default function SuggestedProfile({
@@ -31,7 +32,9 @@ export default function SuggestedProfile({
       <div className="flex items-center justify-between">
         <img
           className="rounded-full w-8 flex mr-3"
-          src={images(`./${username}.jpg`)}
+          src={images(
+            `./${!defaultImg.includes(username) ? "default" : username}.jpg`
+          )}
           alt="profile badge"
         />
         <Link to={`/p/${username}`}>
