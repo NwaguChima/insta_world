@@ -741,16 +741,16 @@ video {
   width: 10rem;
 }
 
+.w-1\/5 {
+  width: 20%;
+}
+
 .w-2\/5 {
   width: 40%;
 }
 
 .w-3\/5 {
   width: 60%;
-}
-
-.w-6\/12 {
-  width: 50%;
 }
 
 .w-full {
@@ -899,6 +899,10 @@ video {
 
 .p-4 {
   padding: 1rem;
+}
+
+.p-8 {
+  padding: 2rem;
 }
 
 .px-4 {
@@ -1050,6 +1054,23 @@ video {
 }
 
 @media (min-width: 640px) {
+  .sm\:w-2\/5 {
+    width: 40%;
+  }
+
+  .sm\:w-3\/5 {
+    width: 60%;
+  }
+
+  .sm\:text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  .sm\:text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
 }
 
 @media (min-width: 768px) {

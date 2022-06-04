@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable quotes */
 import { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -5,7 +6,6 @@ import doesUsernameExist from "../services/firebase";
 import * as ROUTES from "../constants/routes";
 import FirebaseContext from "../context/firbaseContext";
 import iphoneImg from "../images/iphone-with-profile.jpg";
-import logoImg from "../images/logo.png";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -71,8 +71,8 @@ function SignUp() {
       </div>
       <div className="flex flex-col w-2/5">
         <div className="flex flex-col items-center bg-white p-4 border border-gray-primary mb-4 rounded">
-          <h1 className="flex justify-center w-full">
-            <img src={logoImg} alt="Intstagram" className="mt-2 w-6/12 mb-4" />
+          <h1 className="flex justify-center w-full mb-4 font-bold text-xl">
+            Insta_world
           </h1>
           {error && <p className="mb-4 text-xs text-red-primary">{error}</p>}
 
